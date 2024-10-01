@@ -1,0 +1,36 @@
+{% from "govuk_frontend_jinja/components/button/macro.html" import govukButton %}
+{% from "govuk_frontend_jinja/components/inset-text/macro.html" import govukInsetText %}
+
+{% extends "components/base.html" %}
+
+
+{% block pageTitle %}
+   Certificate Renewal - Ministry of Justice
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+
+<h1 class="govuk-heading-xl">Getting Started</h1>
+
+<p class="govuk-body">
+  This service is used for renewing existing SSL certificates. Before you begin, please read the following information carefully to understand the process and the current constraints.
+</p>
+
+<h2 class="govuk-heading-l">What you need to know</h2>
+
+<p class="govuk-body">
+  <ul class="govuk-list govuk-list--bullet">
+    <li>You will need either a valid email domain in order to authenticate and proceed on the next page. Please verify you have an email that matching a domain from this list (//TODO)</li>
+    <li>Please ensure that you have generated the CSR for the correct domain name for which you wish to renew your certificate.</li>
+    <li>Your CSR can either be pasted into the text box on the following page, or uploaded directly for validation - ensure you have the information required before proceeding.</li>
+  </ul>
+</p>
+
+{{ govukButton({
+    'text': "Start now",
+    'href': url_for('main.submit_csr'),
+    'classes': "govuk-button--start"
+}) }}
+
+{% endblock %}
