@@ -17,7 +17,6 @@ trivy-scan:
 	docker build -t localbuild/testimage:latest .
 	trivy image --severity HIGH,CRITICAL localbuild/testimage:latest
 
-
 # Build the Docker image
 build:
 	docker-compose build
@@ -46,5 +45,9 @@ new-namespace:
 # Target to clean the pipenv environment
 clean:
 	pipenv --rm
+
+local:
+	pipenv install --dev
+	pipenv run python -m app.run
 
 .PHONY: build up down logs shell trivy-scan lint all
