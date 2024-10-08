@@ -1,1 +1,80 @@
-//TODO
+{% from "govuk_frontend_jinja/components/input/macro.html" import govukInput %}
+{% from "govuk_frontend_jinja/components/textarea/macro.html" import govukTextarea %}
+{% from "govuk_frontend_jinja/components/button/macro.html" import govukButton %}
+
+{% extends "components/base.html" %}
+
+{% block pageTitle %}
+    Create New DNS Record
+{% endblock %}
+
+{% block beforeContent %}
+{{ super() }}
+{{ govukBackLink ({
+'text': 'Back',
+'href': '/'
+}) }}
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+
+<h1 class="govuk-heading-xl">Validate and Submit a CSR</h1>
+
+<form action="/submit-a-csr" method="POST">
+  {{ govukInput({
+    'label': {
+      'text': "Requestor Name"
+    },
+    'hint': {
+        'text': 'Enter your full name'
+    },
+    'classes': "govuk-!-width-full",
+    'id': "requestor_name",
+    'name': "requestor_name",
+    'errorMessage': errors.get('requestor_name') and {
+        'text': errors['requestor_name']
+      } if errors else ''
+  }) }}
+
+  {{ govukInput({
+    'label': {
+      'text': "Requestor Email"
+    },
+    'hint': {
+        'text': 'Enter your email address'
+    },
+    'classes': "govuk-!-width-full",
+    'id': "requestor_email",
+    'name': "requestor_email",
+    'errorMessage': errors.get('requestor_email') and {
+        'text': errors['requestor_email']
+      } if errors else ''
+  }) }}
+
+  <div id="csrInputField">
+    {{ govukTextarea({
+      'name': "csr_input_field",
+      'id': "csr_input_field",
+      'label': {
+        'text': "CSR Input Field",
+        'classes': "govuk-label--m"
+      },
+      'hint': {
+          'text': 'Enter or Upload Your CSR here'
+      },
+      'classes': "govuk-!-width-full",
+      'value': form_data.get('csr_input_field', '') if form_data else '',
+      'errorMessage': errors.get('csr_input_field') and {
+        'text': errors['csr_input_field']
+      } if errors else ''
+    }) }}
+  </div>
+
+
+  {{ govukButton({
+    'text': "Submit"
+  }) }}
+</form>
+
+{% endblock %}
