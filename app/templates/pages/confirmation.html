@@ -1,0 +1,24 @@
+{% extends "components/base.html" %}
+
+{% block pageTitle %}
+    Request Submitted
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+
+<h1 class="govuk-heading-xl">Your Certificate Renewal Request Has Been Submitted</h1>
+
+<p class="govuk-body">Thank you for submitting your certificate renewal request. We have successfully logged it, and you should receive further instructions shortly.</p>
+
+<p class="govuk-body">Your request has been logged with the following reference number:</p>
+
+<p class="govuk-body">
+    <strong>Request #{{ issue_number }}</strong>
+</p>
+
+<p class="govuk-body">Please quote this issue number if you need to follow up with the team.</p>
+
+<p class="govuk-body">For further assistance or if you have any questions, feel free to contact us via email at <a href="mailto:domains@service.justice.gov.uk" class="govuk-link">certificates@service.justice.gov.uk</a> or reach out to the team in the <strong>#ask-operations-engineering</strong> channel on the Ministry of Justice Slack.</p>
+
+{% endblock %}
