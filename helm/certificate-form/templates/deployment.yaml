@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { include "application.fullname" . } }
-  labels: { { - include "application.labels" . | nindent 4 } }
+  name: { { include "certificate-form.fullname" . } }
+  labels: { { - include "certificate-form.labels" . | nindent 4 } }
 spec:
   replicas: { { .Values.app.deployment.replicaCount } }
   selector:
-    matchLabels: { { - include "application.selectorLabels" . | nindent 6 } }
+    matchLabels: { { - include "certificate-form.selectorLabels" . | nindent 6 } }
   template:
     metadata:
-      labels: { { - include "application.selectorLabels" . | nindent 8 } }
+      labels: { { - include "certificate-form.selectorLabels" . | nindent 8 } }
     spec:
       # serviceAccountName created by the Cloud Platform environment
       serviceAccountName: cd-serviceaccount
@@ -18,6 +18,19 @@ spec:
           image: "{{ .Values.app.deployment.image.repository }}:{{ .Values.app.deployment.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: IfNotPresent
           env:
+            - name: ADMIN_GITHUB_TOKEN
+              value:
+                {{ .Values.app.deployment.env.ADMIN_GITHUB_TOKEN | quote }}
+            - name: ADMIN_SLACK_TOKEN
+              value:
+                {{ .Values.app.deployment.env.ADMIN_SLACK_TOKEN | quote }}
+            - name: AUTH0_DOMAIN
+              value: {{ .Values.app.deployment.env.AUTH0_DOMAIN | quote }}
+            - name: AUTH0_CLIENT_ID
+              value: {{ .Values.app.deployment.env.AUTH0_CLIENT_ID | quote }}
+            - name: AUTH0_CLIENT_SECRET
+              value:
+                {{ .Values.app.deployment.env.AUTH0_CLIENT_SECRET | quote }}
             - name: APP_SECRET_KEY
               value: { { .Values.app.deployment.env.APP_SECRET_KEY | quote } }
             - name: FLASK_DEBUG
