@@ -9,6 +9,7 @@ tests = "coverage run -m unittest"
 tests_report = "coverage report --omit=./test/** --sort=cover --show-missing --skip-empty"
 
 [packages]
+cryptography = "==43.0.1"
 email-validator = "==2.1.0.post1"
 flask = "==3.0.2"
 flask-cors = "==5.0.0"
@@ -22,6 +23,7 @@ argparse = "*"
 
 [dev-packages]
 coverage = "==7.4.4"
+cryptography = "==43.0.1"
 email-validator = "==2.1.0.post1"
 flask = "==3.0.2"
 flask-cors = "==5.0.0"
