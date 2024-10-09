@@ -24,7 +24,7 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: softprops/action-gh-release@vc062e08bd532815e2082a85e87e3ef29c3e6d191 #v2.0.8
+      - uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 #v2.0.8
 
       - uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
@@ -56,15 +56,19 @@ jobs:
 
       - name: Deploy helm chart to dev
         run: |
-          helm upgrade application\
-            helm/join-github \
+          helm upgrade certificate-form\
+            helm/certificate-form \
             --install \
             --force \
             --wait \
             --timeout 10m \
             --namespace ${KUBE_NAMESPACE} \
-            --values=helm/application/values-dev.yaml \
+            --values=helm/certificate-form/values-dev.yaml \
+            --set app.deployment.env.AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID} \
+            --set app.deployment.env.AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET} \
             --set app.deployment.env.APP_SECRET_KEY=${FLASK_APP_SECRET} \
+            --set app.deployment.env.ADMIN_GITHUB_TOKEN="${ADMIN_GITHUB_TOKEN}" \
+            --set app.deployment.env.ADMIN_SLACK_TOKEN="${ADMIN_SLACK_TOKEN}" \
             --set app.deployment.env.SENTRY_DSN_KEY=${SENTRY_DSN_KEY} \
             --set app.deployment.image.repository=${ECR_REGISTRY}/${ECR_REPOSITORY} \
             --set app.deployment.image.tag=${IMAGE_TAG}
