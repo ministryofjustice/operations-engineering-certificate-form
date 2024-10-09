@@ -1,0 +1,10 @@
+app:
+  ingress:
+    host: "certificate-form-dev.cloud-platform.service.justice.gov.uk"
+
+  deployment:
+    replicaCount: 1
+    env:
+      AUTH0_DOMAIN: "operations-engineering.eu.auth0.com"
+      SENTRY_ENV: "development"
+      FLASK_DEBUG: true
