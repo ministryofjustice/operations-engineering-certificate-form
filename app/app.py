@@ -11,18 +11,34 @@ from app.main.config.limiter_config import configure_limiter
 from app.main.config.logging_config import configure_logging
 from app.main.config.routes_config import configure_routes
 from app.main.config.sentry_config import configure_sentry
+from app.main.services.github_service import GithubService
+from app.main.services.gandi_service import GandiService
+
 
 logger = logging.getLogger(__name__)
 
 
-def create_app(is_rate_limit_enabled=True) -> Flask:
+def create_app(github_service=None, gandi_service=None, is_rate_limit_enabled=True) -> Flask:
     configure_logging(app_config.logging_level)
 
     logger.info("Starting app...")
 
     app = Flask(__name__, static_folder="static", static_url_path="/assets")
 
+    if github_service is None:
+        github_service = GithubService(
+            app_config.github.token,
+            app_config.github.issues_repository,
+        )
+
+    if gandi_service is None:
+        gandi_service = GandiService(
+            app_config.gandi.token
+        )
+
     app.secret_key = app_config.flask.app_secret_key
+    app.github_service = github_service
+    app.gandi_service = gandi_service
 
     configure_routes(app)
     configure_error_handlers(app)

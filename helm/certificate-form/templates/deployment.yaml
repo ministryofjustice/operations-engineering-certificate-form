@@ -23,6 +23,9 @@ spec:
             - name: ADMIN_GITHUB_TOKEN
               value:
                 {{ .Values.app.deployment.env.ADMIN_GITHUB_TOKEN | quote }}
+            - name: ADMIN_GANDI_TOKEN
+              value:
+                {{ .Values.app.deployment.env.ADMIN_GANDI_TOKEN | quote }}
             - name: ADMIN_SLACK_TOKEN
               value:
                 {{ .Values.app.deployment.env.ADMIN_SLACK_TOKEN | quote }}
