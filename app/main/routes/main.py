@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, request, flash
+import re
+
+from flask import current_app, Blueprint, render_template, request, flash
 
 from app.main.validators.index import validate_certificate_form
 
@@ -23,7 +25,12 @@ def submit_csr():
                 "pages/submit_csr_page.html", form_data=form_data, errors=errors
             )
 
+        issue_link = current_app.github_service.submit_issue(form_data)
+        issue_number = re.search(r"/issues/(\d+)", issue_link)
+        if issue_number:
+            issue_number = issue_number.group(1)
+
         if not errors:
-            return render_template("pages/confirmation.html", issue_number=2)
+            return render_template("pages/confirmation.html", issue_number=issue_number)
 
     return render_template('pages/submit_csr_page.html')
