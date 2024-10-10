@@ -40,7 +40,6 @@ def _extract_domain_name_from_certificate_signing_request(formatted_csr_string):
     common_name_attributes = csr.subject.get_attributes_for_oid(x509.NameOID.COMMON_NAME)
     if common_name_attributes:
         common_name = common_name_attributes[0].value
-        print(f"Domain name found: {common_name}")
         return common_name
     else:
         print("Domain name not found in CSR")
@@ -60,8 +59,6 @@ def is_certificate_signing_request_valid(formatted_csr_string):
 
 def is_certificate_signing_request_common_name_on_gandi(formatted_csr_string):
     csr_domain_name = _extract_domain_name_from_certificate_signing_request(formatted_csr_string)
-    print(f'CSR DOMAIN NAME: {csr_domain_name}')
-
     if current_app.gandi_service.validate_certificate_signing_request(csr_domain_name) or csr_domain_name == "www.google.com":
         return True
     else:
