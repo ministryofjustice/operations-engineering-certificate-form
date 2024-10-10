@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: { { include "certificate-form.fullname" . } }
-  labels: { { - include "certificate-form.labels" . | nindent 4 } }
+  name: {{ include "certificate-form.fullname" . }}
+  labels:
+    {{- include "certificate-form.labels" . | nindent 4 }}
 spec:
   ports:
     - port: 80
       targetPort: 4567
       name: https
-  selector: { { - include "certificate-form.selectorLabels" . | nindent 4 } }
+  selector: {{- include "certificate-form.selectorLabels" . | nindent 4 }}
