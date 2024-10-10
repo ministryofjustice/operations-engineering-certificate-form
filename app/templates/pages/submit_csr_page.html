@@ -52,6 +52,21 @@
       } if errors else ''
   }) }}
 
+  {{ govukInput({
+    'label': {
+      'text': "Domain Name"
+    },
+    'hint': {
+        'text': 'Enter the domain of the site that required a new certificate'
+    },
+    'classes': "govuk-!-width-full",
+    'id': "domain_name",
+    'name': "domain_name",
+    'errorMessage': errors.get('domain_name') and {
+        'text': errors['domain_name']
+      } if errors else ''
+  }) }}
+
   <div id="csrInputField">
     {{ govukTextarea({
       'name': "csr_input_field",
