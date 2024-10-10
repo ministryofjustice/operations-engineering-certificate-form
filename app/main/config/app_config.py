@@ -14,4 +14,11 @@ app_config = SimpleNamespace(
     sentry=SimpleNamespace(
         dsn_key=__get_env_var("SENTRY_DSN_KEY"), environment=__get_env_var("SENTRY_ENV")
     ),
+    github=SimpleNamespace(
+        issues_repository="ministryofjustice/operations-engineering-certificate-form",
+        token=__get_env_var("ADMIN_GITHUB_TOKEN"),
+    ),
+    gandi=SimpleNamespace(
+        token=__get_env_var("ADMIN_GANDI_TOKEN")
+    )
 )
